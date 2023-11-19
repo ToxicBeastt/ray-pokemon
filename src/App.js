@@ -10,7 +10,7 @@ const App = () => {
     <Router>
       <div className='flex h-screen'>
         <Sidebar />
-        <div>
+        <div className='w-full'>
           <Routes>
             <Route path="/pokemon/:name" element={<PokemonDetailPage />} />
             <Route path="/" element={<Home />} />

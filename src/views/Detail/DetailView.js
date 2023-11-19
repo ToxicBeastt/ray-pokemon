@@ -18,11 +18,11 @@ const DetailView = () => {
     }
 
     return (
-        <div className='flex items-center'>
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-                <Paper elevation={3} className="p-8">
+        <div className='w-full py-2 px-8'>
+            <div className="absolute bottom-8 right-1/4 transform -translate-x-1/2">
+                <Paper elevation={3} className="p-2">
                     <TableContainer>
-                        <Table>
+                        <Table size="small">
                             <TableHead>
                                 <TableRow>
                                     <TableCell>
