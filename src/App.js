@@ -3,6 +3,7 @@ import './App.css';
 import Home from './pages/Home';
 import PokemonDetailPage from './pages/PokemonDetailPage';
 import Sidebar from './components/Sidebar';
+import MyPokemonPage from './pages/MyPokemonPage';
 
 const App = () => {
 
@@ -14,6 +15,7 @@ const App = () => {
           <Routes>
             <Route path="/pokemon/:name" element={<PokemonDetailPage />} />
             <Route path="/" element={<Home />} />
+            <Route path="/my-pokemon" element={<MyPokemonPage />} />
           </Routes>
         </div>
       </div>
