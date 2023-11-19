@@ -6,9 +6,10 @@ const useDetailView = () => {
   const { name } = useParams();
   const [pokemon, setPokemon] = useState(null);
   const [comparePokemon, setComparePokemon] = useState(null);
-  const [selectedComparisonPokemon, setSelectedComparisonPokemon] =
-    useState("");
+  const [selectedComparisonPokemon, setSelectedComparisonPokemon] = useState("");
   const [allPokemonList, setAllPokemonList] = useState([]);
+  const [caughtPokemons, setCaughtPokemons] = useState(JSON.parse(localStorage.getItem("caughtPokemons")) || []);
+  const [isPokemonCaught, setIsPokemonCaught] = useState(false);
 
   const normalizePokemonDetails = (data) => {
     const { id, name, types, stats } = data;
@@ -79,8 +80,14 @@ const useDetailView = () => {
     const caughtPokemons =
       JSON.parse(localStorage.getItem("caughtPokemons")) || [];
     caughtPokemons.push(name);
+    setCaughtPokemons(caughtPokemons);
     localStorage.setItem("caughtPokemons", JSON.stringify(caughtPokemons));
+    setIsPokemonCaught(true);
   };
+
+  const handleClose = () => {
+    setIsPokemonCaught(false);
+  }
 
   return {
     pokemon,
@@ -90,6 +97,9 @@ const useDetailView = () => {
     setSelectedComparisonPokemon,
     handleCompareClick,
     handleCatch,
+    caughtPokemons,
+    isPokemonCaught,
+    handleClose,
   };
 };
 

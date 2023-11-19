@@ -1,5 +1,9 @@
 import React from "react";
 import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   MenuItem,
   Paper,
@@ -24,6 +28,9 @@ const DetailView = () => {
     setSelectedComparisonPokemon,
     handleCompareClick,
     handleCatch,
+    caughtPokemons,
+    isPokemonCaught,
+    handleClose,
   } = useDetailView();
 
   if (!pokemon) {
@@ -31,169 +38,190 @@ const DetailView = () => {
   }
 
   return (
-    <div className="w-full py-2 px-8">
-      <div className="absolute bottom-8 right-1/4 transform -translate-x-1/2">
-        <Paper elevation={3} className="p-2">
-          <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      Stats
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      {pokemon.name}
-                    </Typography>
-                  </TableCell>
-                  {comparePokemon && (
-                    <>
-                      <TableCell>
-                        <Typography variant="subtitle1" fontWeight="bold">
-                          {comparePokemon.name}
-                        </Typography>
-                      </TableCell>
-                    </>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {pokemon.stats.map((stat, index) => (
-                  <TableRow key={index}>
-                    <TableCell component="th" scope="row">
-                      <Typography variant="body1" fontWeight="bold">
-                        {stat.statName}
+    <>
+      <div className="w-full py-2 px-8">
+        <div className="absolute bottom-8 right-1/4 transform -translate-x-1/2">
+          <Paper elevation={3} className="p-2">
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        Stats
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography
-                        variant="body1"
-                        fontWeight="bold"
-                        className={
-                          comparePokemon
-                            ? stat.baseStat >
-                              comparePokemon.stats[index].baseStat
-                              ? "text-green-500"
-                              : "text-red-500"
-                            : "text-black"
-                        }
-                      >
-                        {stat.baseStat}
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {pokemon.name}
                       </Typography>
                     </TableCell>
                     {comparePokemon && (
+                      <>
+                        <TableCell>
+                          <Typography variant="subtitle1" fontWeight="bold">
+                            {comparePokemon.name}
+                          </Typography>
+                        </TableCell>
+                      </>
+                    )}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {pokemon.stats.map((stat, index) => (
+                    <TableRow key={index}>
+                      <TableCell component="th" scope="row">
+                        <Typography variant="body1" fontWeight="bold">
+                          {stat.statName}
+                        </Typography>
+                      </TableCell>
                       <TableCell>
                         <Typography
                           variant="body1"
                           fontWeight="bold"
                           className={
-                            stat.baseStat < comparePokemon.stats[index].baseStat
-                              ? "text-green-500"
-                              : "text-red-500"
+                            comparePokemon
+                              ? stat.baseStat >
+                                comparePokemon.stats[index].baseStat
+                                ? "text-green-500"
+                                : "text-red-500"
+                              : "text-black"
                           }
                         >
-                          {comparePokemon.stats[index].baseStat}
+                          {stat.baseStat}
                         </Typography>
                       </TableCell>
-                    )}
-                  </TableRow>
-                ))}
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <Typography variant="body1" fontWeight="bold">
-                      Types
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    {pokemon.types.map((val) => (
+                      {comparePokemon && (
+                        <TableCell>
+                          <Typography
+                            variant="body1"
+                            fontWeight="bold"
+                            className={
+                              stat.baseStat <
+                              comparePokemon.stats[index].baseStat
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }
+                          >
+                            {comparePokemon.stats[index].baseStat}
+                          </Typography>
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  ))}
+                  <TableRow>
+                    <TableCell component="th" scope="row">
                       <Typography variant="body1" fontWeight="bold">
-                        {val.typeName}
+                        Types
                       </Typography>
-                    ))}
-                  </TableCell>
-                  {comparePokemon && (
+                    </TableCell>
                     <TableCell>
-                      {comparePokemon.types.map((val) => (
+                      {pokemon.types.map((val) => (
                         <Typography variant="body1" fontWeight="bold">
                           {val.typeName}
                         </Typography>
                       ))}
                     </TableCell>
-                  )}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Grid
-            container
-            spacing={2}
-            className="pt-2 flex items-center justify-center"
-          >
-            <Grid item>
-              <Select
-                value={selectedComparisonPokemon}
-                onChange={(e) => setSelectedComparisonPokemon(e.target.value)}
-                displayEmpty
-                className="min-w-[150px] max-w[150px]"
-              >
-                <MenuItem value="" disabled>
-                  Select Pokemon
-                </MenuItem>
-                {allPokemonList.map((p) => (
-                  <MenuItem key={p.label} value={p.value}>
-                    {p.label}
+                    {comparePokemon && (
+                      <TableCell>
+                        {comparePokemon.types.map((val) => (
+                          <Typography variant="body1" fontWeight="bold">
+                            {val.typeName}
+                          </Typography>
+                        ))}
+                      </TableCell>
+                    )}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Grid
+              container
+              spacing={2}
+              className="pt-2 flex items-center justify-center"
+            >
+              <Grid item>
+                <Select
+                  value={selectedComparisonPokemon}
+                  onChange={(e) => setSelectedComparisonPokemon(e.target.value)}
+                  displayEmpty
+                  className="min-w-[150px] max-w[150px]"
+                >
+                  <MenuItem value="" disabled>
+                    Select Pokemon
                   </MenuItem>
-                ))}
-              </Select>
+                  {allPokemonList.map((p) => (
+                    <MenuItem key={p.label} value={p.value}>
+                      {p.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Grid>
+              <Grid item className="flex items-center justify-center">
+                <Button
+                  onClick={handleCompareClick}
+                  variant="contained"
+                  color="primary"
+                >
+                  {!comparePokemon ? "Compare" : "Clear"}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item className="flex items-center justify-center">
+            <div className="pt-2 flex items-center justify-center">
               <Button
-                onClick={handleCompareClick}
-                variant="contained"
-                color="primary"
+                onClick={handleCatch}
+                disabled={caughtPokemons.includes(pokemon.name)}
               >
-                {!comparePokemon ? "Compare" : "Clear"}
+                {caughtPokemons.includes(pokemon.name) &&  'Already' } Caught {pokemon.name}
               </Button>
-            </Grid>
-          </Grid>
-          <div className="pt-2 flex items-center justify-center">
-            <Button onClick={handleCatch}>Catch</Button>
-          </div>
-        </Paper>
-      </div>
-      <Grid container spacing={3}>
-        <Grid
-          item
-          xs={12}
-          sm={comparePokemon ? 6 : 12}
-          className="flex items-center justify-center"
-        >
-          <div className="h-screen">
-            <img
-              className="h-3/4 object-contain"
-              src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}
-            />
-          </div>
-        </Grid>
-        {comparePokemon && (
+            </div>
+          </Paper>
+        </div>
+        <Grid container spacing={3}>
           <Grid
             item
             xs={12}
-            sm={6}
+            sm={comparePokemon ? 6 : 12}
             className="flex items-center justify-center"
           >
             <div className="h-screen">
               <img
                 className="h-3/4 object-contain"
-                src={`https://img.pokemondb.net/artwork/${comparePokemon.name}.jpg`}
+                src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}
               />
             </div>
           </Grid>
-        )}
-      </Grid>
-    </div>
+          {comparePokemon && (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              className="flex items-center justify-center"
+            >
+              <div className="h-screen">
+                <img
+                  className="h-3/4 object-contain"
+                  src={`https://img.pokemondb.net/artwork/${comparePokemon.name}.jpg`}
+                />
+              </div>
+            </Grid>
+          )}
+        </Grid>
+      </div>
+
+      <Dialog open={isPokemonCaught} onClose={handleClose}>
+        <DialogTitle>Congratulations!</DialogTitle>
+        <DialogContent>
+          <p>You caught a Pokémon!</p>
+          {/* Display additional details or images if needed */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 export default DetailView;
