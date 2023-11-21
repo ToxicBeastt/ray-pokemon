@@ -76,7 +76,6 @@ const useDetailView = () => {
   };
 
   const handleCatch = () => {
-    // Store the caught Pokémon's name in local storage
     const caughtPokemons =
       JSON.parse(localStorage.getItem("caughtPokemons")) || [];
     caughtPokemons.push(name);
