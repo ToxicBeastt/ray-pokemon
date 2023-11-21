@@ -2,10 +2,12 @@ import React from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import useListView from "./useListView";
 
 const ListView = () => {
   const {
     pokemonList,
+    currentPage,
     setCurrentPage,
   } = useListView();
 

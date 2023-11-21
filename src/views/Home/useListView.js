@@ -20,6 +20,7 @@ const useListView = () => {
 
     return {
         pokemonList,
+        currentPage,
         setCurrentPage,
     }
 }

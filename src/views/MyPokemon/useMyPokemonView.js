@@ -5,7 +5,6 @@ const useMyPokemonView = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-      // Retrieve caught Pokémon names from local storage
       const storedPokemons = JSON.parse(localStorage.getItem('caughtPokemons')) || [];
       setCaughtPokemons(storedPokemons);
     }, []);
