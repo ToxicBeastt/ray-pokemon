@@ -1,8 +1,8 @@
 import React from 'react';
 import DetailView from '../views/Detail/DetailView';
 
-const PokemonDetailPage = ({ match }) => {
-  return <DetailView match={match} />;
+const PokemonDetailPage = () => {
+  return <DetailView />;
 };
 
 export default PokemonDetailPage;

@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
 const ListView = () => {
-  const [pokemonList, setPokemonList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    const fetchPokemonList = async () => {
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=${
-          (currentPage - 1) * 10
-        }&limit=10`
-      );
-      setPokemonList(response.data.results);
-    };
-
-    fetchPokemonList();
-  }, [currentPage]);
+  const {
+    pokemonList,
+    setCurrentPage,
+  } = useListView();
 
   return (
     <div className="mx-4 my-2">
