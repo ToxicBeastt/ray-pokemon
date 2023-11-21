@@ -14,7 +14,6 @@ const Sidebar = () => {
                     <li className="mb-2">
                         <Link to="/my-pokemon">My Pokemon</Link>
                     </li>
-                    {/* Add more links as needed */}
                 </ul>
             </div>
         </div>
